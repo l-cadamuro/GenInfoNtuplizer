@@ -1,0 +1,10 @@
+dasgoclient --query="file dataset=/VBF_HToInvisible_M125_14TeV_powheg_pythia8/PhaseIITDRSpring19DR-NoPU_106X_upgrade2023_realistic_v3-v2/GEN-SIM-DIGI-RAW" --unique > VBF_Hinv.txt
+dasgoclient --query="file dataset=/SMS-TChiWZ_ZToLL_mChargino-400_mLsp-375_TuneCUETP8M1_14TeV-madgraphMLM-pythia8/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5-v1/MINIAODSIM" --unique > SMS-TChiWZ_ZToLL_mChargino-400_mLsp-375.txt
+dasgoclient --query="file dataset=/SMS-TChiWZ_ZToLL_mChargino-300_mLsp-292p5_TuneCUETP8M1_14TeV-madgraphMLM-pythia8/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5-v1/MINIAODSIM" --unique > SMS-TChiWZ_ZToLL_mChargino-300_mLsp-292p5.txt
+dasgoclient --query="file dataset=/SMS-TChiWZ_ZToLL_mChargino-300_mLsp-250_TuneCUETP8M1_14TeV-madgraphMLM-pythia8/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5-v1/MINIAODSIM" --unique > SMS-TChiWZ_ZToLL_mChargino-300_mLsp-250.txt
+dasgoclient --query="file dataset=/ST_tch_14TeV_antitop_incl-powheg-pythia8-madspin/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5_ext1-v1/MINIAODSIM" --unique > singleTop_tch.txt
+dasgoclient --query="file dataset=/TTbar_14TeV_TuneCP5_Pythia8/PhaseIITDRSpring19DR-NoPU_106X_upgrade2023_realistic_v3-v1/GEN-SIM-DIGI-RAW" --unique > ttbar.txt
+dasgoclient --query="file dataset=/GluGluHToGG_M125_14TeV_amcatnloFXFX_pythia8/PhaseIITDRSpring19DR-NoPU_106X_upgrade2023_realistic_v3-v1/GEN-SIM-DIGI-RAW" --unique > Hgg.txt
+dasgoclient --query="file dataset=/GluGluToHHTo2B2Tau_node_SM_14TeV-madgraph/PhaseIITDRFall17DR-PU200_93X_upgrade2023_realistic_v2-v2/GEN-SIM-RECO" --unique > ggHH_bbtautau.txt
+dasgoclient --query="file dataset=/GluGluToHHTo2B2G_node_SM_14TeV-madgraph/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5-v1/MINIAODSIM" --unique > ggHH_bbgg.txt
+dasgoclient --query="file dataset=/GluGluToHHTo4B_node_SM_14TeV-madgraph/PhaseIISpr18AODMiniAOD-PU200_93X_upgrade2023_realistic_v5-v1/MINIAODSIM" --unique > ggHH_bbbb.txt
