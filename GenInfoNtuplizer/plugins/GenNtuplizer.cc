@@ -134,6 +134,8 @@ class GenNtuplizer : public edm::EDAnalyzer {
         // taus
         int ntaus_;
         int ntaushad_;
+        int ntause_;
+        int ntausmu_;
 
         float tauh1_pt_;
         float tauh1_eta_;
@@ -144,6 +146,26 @@ class GenNtuplizer : public edm::EDAnalyzer {
         float tauh2_eta_;
         float tauh2_phi_;
         float tauh2_m_;
+
+        float taue1_pt_;
+        float taue1_eta_;
+        float taue1_phi_;
+        float taue1_m_;
+
+        float taue2_pt_;
+        float taue2_eta_;
+        float taue2_phi_;
+        float taue2_m_;
+
+        float taumu1_pt_;
+        float taumu1_eta_;
+        float taumu1_phi_;
+        float taumu1_m_;
+
+        float taumu2_pt_;
+        float taumu2_eta_;
+        float taumu2_phi_;
+        float taumu2_m_;
 
         // leptons
 
@@ -279,16 +301,38 @@ void GenNtuplizer::beginJob(){
     // ----------------------- taus
     tree_->Branch("ntaus",      &ntaus_);
     tree_->Branch("ntaushad",   &ntaushad_);
+    tree_->Branch("ntause",     &ntause_);
+    tree_->Branch("ntausmu",    &ntausmu_);
 
-    tree_->Branch("tauh1_pt",  &tauh1_pt_);
-    tree_->Branch("tauh1_eta", &tauh1_eta_);
-    tree_->Branch("tauh1_phi", &tauh1_phi_);
-    tree_->Branch("tauh1_m",   &tauh1_m_);
+    tree_->Branch("tauh1_pt",   &tauh1_pt_);
+    tree_->Branch("tauh1_eta",  &tauh1_eta_);
+    tree_->Branch("tauh1_phi",  &tauh1_phi_);
+    tree_->Branch("tauh1_m",    &tauh1_m_);
 
-    tree_->Branch("tauh2_pt",  &tauh2_pt_);
-    tree_->Branch("tauh2_eta", &tauh2_eta_);
-    tree_->Branch("tauh2_phi", &tauh2_phi_);
-    tree_->Branch("tauh2_m",   &tauh2_m_);
+    tree_->Branch("tauh2_pt",   &tauh2_pt_);
+    tree_->Branch("tauh2_eta",  &tauh2_eta_);
+    tree_->Branch("tauh2_phi",  &tauh2_phi_);
+    tree_->Branch("tauh2_m",    &tauh2_m_);
+
+    tree_->Branch("taue1_pt",   &taue1_pt_);
+    tree_->Branch("taue1_eta",  &taue1_eta_);
+    tree_->Branch("taue1_phi",  &taue1_phi_);
+    tree_->Branch("taue1_m",    &taue1_m_);
+
+    tree_->Branch("taue2_pt",   &taue2_pt_);
+    tree_->Branch("taue2_eta",  &taue2_eta_);
+    tree_->Branch("taue2_phi",  &taue2_phi_);
+    tree_->Branch("taue2_m",    &taue2_m_);
+
+    tree_->Branch("taumu1_pt",  &taumu1_pt_);
+    tree_->Branch("taumu1_eta", &taumu1_eta_);
+    tree_->Branch("taumu1_phi", &taumu1_phi_);
+    tree_->Branch("taumu1_m",   &taumu1_m_);
+
+    tree_->Branch("taumu2_pt",  &taumu2_pt_);
+    tree_->Branch("taumu2_eta", &taumu2_eta_);
+    tree_->Branch("taumu2_phi", &taumu2_phi_);
+    tree_->Branch("taumu2_m",   &taumu2_m_);
 
     //----------------------- leptons
 
@@ -547,7 +591,8 @@ void GenNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
             ntaus_    = pt_idx_taus.size();
 
             // build the visible tauh for each tau found
-            std::vector<std::tuple<double, bool, TLorentzVector>> tauhs;
+            // std::vector<std::tuple<double, bool, TLorentzVector>> tauhs;
+            std::vector<std::tuple<double, int, TLorentzVector>> tauhs;
             
             for (uint itau = 0; itau < pt_idx_taus.size(); ++itau)
             {
@@ -557,7 +602,8 @@ void GenNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                 TLorentzVector vTauh(0,0,0,0);
 
                 // cout << " **** TAU : " << itau << " has " << gentau.numberOfDaughters() << " daughters" << endl;
-                bool is_had_tau = true;
+                // bool is_had_tau = true;
+                int tau_decay_type = 2; // 0 : e, 1 : mu, 2 : tauh
 
                 for (uint idau = 0; idau < gentau.numberOfDaughters(); ++idau)
                 {
@@ -570,8 +616,14 @@ void GenNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                     if (apdgId == 12 || apdgId == 14 || apdgId == 16)
                         continue;
 
-                    if (apdgId == 11 || apdgId == 13)
-                        is_had_tau = false;
+                    // if (apdgId == 11 || apdgId == 13)
+                    //     is_had_tau = false;
+
+                    if (apdgId == 11)
+                        tau_decay_type = 0;
+
+                    if (apdgId == 13)
+                        tau_decay_type = 1;
 
                     if (apdgId == 15)
                         cout << " [ERROR] : tau from hard scatter has a pdgid 15 daughter" << endl;
@@ -581,14 +633,22 @@ void GenNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                     vTauh += vObj;
                 }
 
-                tauhs.push_back(make_tuple(vTauh.Pt(), is_had_tau, vTauh));
+                // tauhs.push_back(make_tuple(vTauh.Pt(), is_had_tau, vTauh));
+                tauhs.push_back(make_tuple(vTauh.Pt(), tau_decay_type, vTauh));
             }
 
             // sort(tauhs.begin(), tauhs.end());
             // reverse(tauhs.begin(), tauhs.end()); // from highest to lowest pt
 
+            // sort(tauhs.begin(), tauhs.end(),
+            //     [](const std::tuple<double, bool, TLorentzVector> & a, const std::tuple<double, bool, TLorentzVector> & b) -> bool
+            //     {
+            //         return std::get<0>(a) > std::get<0>(b);
+            //     }
+            // ); // pt high to low in this way
+
             sort(tauhs.begin(), tauhs.end(),
-                [](const std::tuple<double, bool, TLorentzVector> & a, const std::tuple<double, bool, TLorentzVector> & b) -> bool
+                [](const std::tuple<double, int, TLorentzVector> & a, const std::tuple<double, int, TLorentzVector> & b) -> bool
                 {
                     return std::get<0>(a) > std::get<0>(b);
                 }
@@ -596,27 +656,74 @@ void GenNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
             for (uint itau = 0; itau < tauhs.size(); ++itau) 
             {
-                if (!std::get<1> (tauhs.at(itau))) // not had tau
-                    continue;
-                
-                ntaushad_ += 1;
-                TLorentzVector vtau = std::get<2> (tauhs.at(itau));
+                // if (!std::get<1> (tauhs.at(itau))) // not had tau
+                //     continue;
 
-                if (tauh1_pt_ < 0)
-                {
-                    tauh1_pt_   = vtau.Pt();
-                    tauh1_eta_  = vtau.Eta();
-                    tauh1_phi_  = vtau.Phi();
-                    tauh1_m_    = vtau.M();
+                if (std::get<1> (tauhs.at(itau)) == 2) // had tau
+                {                
+                    ntaushad_ += 1;
+                    TLorentzVector vtau = std::get<2> (tauhs.at(itau));
+
+                    if (tauh1_pt_ < 0)
+                    {
+                        tauh1_pt_   = vtau.Pt();
+                        tauh1_eta_  = vtau.Eta();
+                        tauh1_phi_  = vtau.Phi();
+                        tauh1_m_    = vtau.M();
+                    }
+                    else if (tauh2_pt_ < 0)
+                    {
+                        tauh2_pt_   = vtau.Pt();
+                        tauh2_eta_  = vtau.Eta();
+                        tauh2_phi_  = vtau.Phi();
+                        tauh2_m_    = vtau.M();
+                    }
+                    // other tauh not saved
                 }
-                else if (tauh2_pt_ < 0)
-                {
-                    tauh2_pt_   = vtau.Pt();
-                    tauh2_eta_  = vtau.Eta();
-                    tauh2_phi_  = vtau.Phi();
-                    tauh2_m_    = vtau.M();
+
+                if (std::get<1> (tauhs.at(itau)) == 1) // mu tau
+                {                
+                    ntausmu_ += 1;
+                    TLorentzVector vtau = std::get<2> (tauhs.at(itau));
+
+                    if (taumu1_pt_ < 0)
+                    {
+                        taumu1_pt_   = vtau.Pt();
+                        taumu1_eta_  = vtau.Eta();
+                        taumu1_phi_  = vtau.Phi();
+                        taumu1_m_    = vtau.M();
+                    }
+                    else if (taumu2_pt_ < 0)
+                    {
+                        taumu2_pt_   = vtau.Pt();
+                        taumu2_eta_  = vtau.Eta();
+                        taumu2_phi_  = vtau.Phi();
+                        taumu2_m_    = vtau.M();
+                    }
+                    // other tauh not saved
                 }
-                // other tauh not saved
+
+                if (std::get<1> (tauhs.at(itau)) == 0) // 3 tau
+                {                
+                    ntause_ += 1;
+                    TLorentzVector vtau = std::get<2> (tauhs.at(itau));
+
+                    if (taue1_pt_ < 0)
+                    {
+                        taue1_pt_   = vtau.Pt();
+                        taue1_eta_  = vtau.Eta();
+                        taue1_phi_  = vtau.Phi();
+                        taue1_m_    = vtau.M();
+                    }
+                    else if (taue2_pt_ < 0)
+                    {
+                        taue2_pt_   = vtau.Pt();
+                        taue2_eta_  = vtau.Eta();
+                        taue2_phi_  = vtau.Phi();
+                        taue2_m_    = vtau.M();
+                    }
+                    // other tauh not saved
+                }
             }
         } // do taus
 
@@ -746,6 +853,8 @@ void GenNtuplizer::initialize()
 
     ntaus_      = 0;
     ntaushad_   = 0;
+    ntausmu_    = 0;
+    ntause_     = 0;
 
     tauh1_pt_    = -999.;               
     tauh1_eta_   = -999.;                
@@ -757,6 +866,25 @@ void GenNtuplizer::initialize()
     tauh2_phi_   = -999;
     tauh2_m_     = -999;
     
+    taue1_pt_  = -999;
+    taue1_eta_ = -999;
+    taue1_phi_ = -999;
+    taue1_m_   = -999;
+
+    taue2_pt_   = -999;
+    taue2_eta_  = -999;
+    taue2_phi_  = -999;
+    taue2_m_    = -999;
+
+    taumu1_pt_  = -999;
+    taumu1_eta_ = -999;
+    taumu1_phi_ = -999;
+    taumu1_m_   = -999;
+
+    taumu2_pt_  = -999;
+    taumu2_eta_ = -999;
+    taumu2_phi_ = -999;
+    taumu2_m_   = -999;
 
     neles_ = 0;
 

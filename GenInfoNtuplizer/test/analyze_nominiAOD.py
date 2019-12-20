@@ -35,7 +35,8 @@ options.register ('isMiniAOD',
 
 options.parseArguments()
 
-isMiniAOD = False if options.isMiniAOD == 0 else True
+#isMiniAOD = False if options.isMiniAOD == 0 else True
+isMiniAOD = False
 print '... is this a miniAOD sample ? ', isMiniAOD
 
 if options.inputFiles:
@@ -48,9 +49,7 @@ else:
     # 'file:../../../../../test_files/HHbbtt/02848F03-40B8-E711-AA50-0025905B85A0.root'
     # '/store/mc/PhaseIITDRFall17DR/GluGluToHHTo2B2Tau_node_SM_14TeV-madgraph/GEN-SIM-RECO/PU200_93X_upgrade2023_realistic_v2-v2/30000/02848F03-40B8-E711-AA50-0025905B85A0.root'
     # '/store/mc/PhaseIITDRSpring19DR/TTbar_14TeV_TuneCP5_Pythia8/GEN-SIM-DIGI-RAW/NoPU_106X_upgrade2023_realistic_v3-v1/230000/0023029B-F85F-AD4B-8D25-4D7255ABD76F.root'
-    #'/store/mc/PhaseIISpr18AODMiniAOD/GluGluToHHTo2B2G_node_SM_14TeV-madgraph/MINIAODSIM/PU200_93X_upgrade2023_realistic_v5-v1/70000/08971661-9645-E811-B6FD-44A842CF05BF.root'
-    #'/store/mc/PhaseIITDRFall17DR/GluGluToHHTo2B2Tau_node_SM_14TeV-madgraph/GEN-SIM-RECO/PU200_93X_upgrade2023_realistic_v2-v2/30000/02848F03-40B8-E711-AA50-0025905B85A0.root',
-    '/store/mc/PhaseIITDRFall17MiniAOD/GluGluToHHTo2B2Tau_node_SM_14TeV-madgraph/MINIAODSIM/PU200_93X_upgrade2023_realistic_v2-v3/40000/AE833993-E7C1-E711-8900-FA163E3B7789.root'
+    '/store/mc/PhaseIISpr18AODMiniAOD/GluGluToHHTo2B2G_node_SM_14TeV-madgraph/MINIAODSIM/PU200_93X_upgrade2023_realistic_v5-v1/70000/08971661-9645-E811-B6FD-44A842CF05BF.root'
   )
 
 process.source = cms.Source("PoolSource",
