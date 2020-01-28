@@ -45,14 +45,17 @@ def make_extra_texts(testo = 'Thresholds at same rate', linepos = 0.505):
     msg.SetTextAlign(31)
     msg.SetTextSize(textsize-2)
 
-    lw = 0.045
-    fakeL1 = ROOT.TLine(linepos, ytxt-0.05+0.01+0.01, linepos+lw, ytxt-0.05+0.01+0.01)
+    # lw = 0.045
+    # fakeL1 = ROOT.TLine(linepos, ytxt-0.05+0.01+0.01, linepos+lw, ytxt-0.05+0.01+0.01)
+    lw = 0.03
+    fakeL1 = ROOT.TLine(linepos, ytxt-0.05-0.01+0.01-0.003, linepos, ytxt-0.05-0.01+0.01+lw-0.003)
     fakeL1.SetNDC(True)
     fakeL1.SetLineStyle(1)
     fakeL1.SetLineWidth(2)
     fakeL1.SetLineColor(ROOT.kBlack)
 
-    fakeL2 = ROOT.TLine(linepos, ytxt-0.05-0.01+0.01, linepos+lw, ytxt-0.05-0.01+0.01)
+    # fakeL2 = ROOT.TLine(linepos, ytxt-0.05-0.01+0.01, linepos+lw, ytxt-0.05-0.01+0.01)
+    fakeL2 = ROOT.TLine(linepos+0.03, ytxt-0.05-0.01+0.01-0.003, linepos+0.03, ytxt-0.05-0.01+0.01+lw-0.003)
     fakeL2.SetNDC(True)
     fakeL2.SetLineStyle(7)
     fakeL2.SetLineWidth(2)
@@ -94,9 +97,13 @@ files = {
 }
 
 colors = {
-    'singleTop_tch'    : ROOT.TColor.GetColor('#32CD32'),
-    'ttbar'            : ROOT.TColor.GetColor('#228B22'),
-    'ggHH_bbtautaulep' : ROOT.TColor.GetColor('#186218'),
+    # 'singleTop_tch'    : ROOT.TColor.GetColor('#32CD32'),
+    # 'ttbar'            : ROOT.TColor.GetColor('#228B22'),
+    # 'ggHH_bbtautaulep' : ROOT.TColor.GetColor('#186218'),
+    ###
+    'singleTop_tch'    : ROOT.TColor.GetColor('#0EA7B5'),
+    'ttbar'            : ROOT.TColor.GetColor('#0C457D'),
+    'ggHH_bbtautaulep' : ROOT.TColor.GetColor('#E8702A'),
     ###
     'Hgg'       : ROOT.kRed,
     'ggHH_bbgg' : ROOT.kOrange+1,
@@ -266,7 +273,7 @@ toplot = {
     'Hgg'                         : ('gamma2_pt', 'ngammas == 2 && TMath::Abs(gamma2_eta) < 2.4'),
     'ggHH_bbgg'                   : ('gamma2_pt', 'ngammas == 2 && TMath::Abs(gamma2_eta) < 2.4'),
     ###
-    'ggHH_bbtautau'               : ('tauh2_pt',  'c == 2 && ntaus == 2 && TMath::Abs(tauh1_eta) < 2.4 && TMath::Abs(tauh2_eta) < 2.4'),
+    'ggHH_bbtautau'               : ('tauh2_pt',  'ntaushad == 2 && ntaus == 2 && TMath::Abs(tauh1_eta) < 2.4 && TMath::Abs(tauh2_eta) < 2.4'),
     ###
     'chargino-300_mLsp-292p5'     : ('met',          'met > 0'),  ### dummy cut
     'chargino-300_mLsp-250'       : ('met',          'met > 0'),  ### dummy cut
@@ -293,11 +300,18 @@ texts_rate = {
     'jetmet'  : 'Thresholds for a rate of 18 kHz',
 }
 
+# linepos = {
+#     'leptons' : 0.18,
+#     'photons' : 0.4,
+#     'taus'    : 0.4,
+#     'jetmet'  : 0.4,
+# }
+
 linepos = {
-    'leptons' : 0.18,
-    'photons' : 0.4,
-    'taus'    : 0.4,
-    'jetmet'  : 0.4,
+    'leptons' : 0.18+0.05,
+    'photons' : 0.4+0.02,
+    'taus'    : 0.4+0.02,
+    'jetmet'  : 0.4+0.02,
 }
 
 c1 = ROOT.TCanvas('c1', 'c1', 600, 600)
