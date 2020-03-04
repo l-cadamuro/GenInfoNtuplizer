@@ -114,7 +114,7 @@ colors = {
     'chargino-300_mLsp-250'       : ROOT.kBlue+3,
     'chargino-400_mLsp-375'       : ROOT.kBlue+2,
     'VBF_Hinv'                    : ROOT.kAzure,
-    'ZHinv'                       : ROOT.kAzure, #ROOT.kBlue,
+    'ZHinv'                       : ROOT.TColor.GetColor('#FF6F69'), #ROOT.kAzure, #ROOT.kBlue,
     # 'ggHH_bbbb'                   : ROOT.kAzure+5,
     'ggHH_bbbb'                   : ROOT.kMagenta+1,
 }
