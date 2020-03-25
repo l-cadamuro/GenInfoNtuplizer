@@ -145,7 +145,7 @@ do_legend = False
 thr_vals = {
     # 'lead mu'    : (22,  50),
     'lead mu'    : (15,  24),
-    'lead e'     : (28,  62),
+    'lead e'     : (28,  49),
     # 'sub tau'    : (52,  115),
     'sub tau'    : (36,  90),
     'sub pho'    : (12,  20),
@@ -294,7 +294,7 @@ toplot = {
 
 texts_rate = {
     # 'leptons' : 'Thresholds for a rate of 11.7 kHz (#mu), 23.9 kHz (e)',
-    'leptons' : 'Thresholds for a rate of 42 kHz (#mu), 24 kHz (e)',
+    'leptons' : 'Thresholds for a rate of 42 kHz (#mu), 28 kHz (e)',
     'photons' : 'Thresholds for a rate of 50 kHz',
     'taus'    : 'Thresholds for a rate of 6.6 kHz',
     'jetmet'  : 'Thresholds for a rate of 18 kHz',
